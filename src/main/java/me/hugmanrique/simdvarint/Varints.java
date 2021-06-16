@@ -27,8 +27,7 @@ public final class Varints {
   private static final VectorSpecies<Integer> INT_SPECIES = IntVector.SPECIES_256; // > 32*MAX_BYTES
   private static final ByteVector DROP_MSB = ByteVector.broadcast(SPECIES, (byte) 0x7F);
 
-  // Given the index N of the last lane containing a varint, the corresponding
-  // mask has the first N + 1 lanes set.
+  // The N-th mask is a series of N + 1 set lanes followed by a series of unset lanes.
   @SuppressWarnings("unchecked")
   private static final VectorMask<Integer>[] VARINT_MASKS = new VectorMask[MAX_BYTES];
 
