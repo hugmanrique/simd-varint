@@ -1,0 +1,27 @@
+name: build
+
+on:
+  push:
+    branches: '*'
+    tags-ignore: ['*']
+  pull_request:
+    branches: '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 16
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: '16'
+      - name: Set up JDK 17
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: '17'
+          targets: 'JDK17' # set env variable
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build

@@ -2,7 +2,7 @@
 
 [![artifact][artifact]][artifact-url]
 [![javadoc][javadoc]][javadoc-url]
-<!--[![tests][tests]][tests-url]-->
+[![action][action]][action-url]
 [![license][license]][license-url]
 
 Provides methods to read and write [variable-length integers](https://developers.google.com/protocol-buffers/docs/encoding)
@@ -49,7 +49,7 @@ assertEquals(255, VarInts.read(buf, 0));
 [artifact-url]: https://search.maven.org/artifact/me.hugmanrique/simd-varint
 [javadoc]: https://javadoc.io/badge2/me.hugmanrique/simd-varint/javadoc.svg
 [javadoc-url]: https://javadoc.io/doc/me.hugmanrique/simd-varint
-<!--[tests]: https://img.shields.io/travis/hugmanrique/simd-varint/main.svg
-[tests-url]: https://travis-ci.org/hugmanrique/simd-varint-->
+[action]: https://github.com/hugmanrique/simd-varint/actions/workflows/build/badge.svg
+[action-url]: https://github.com/hugmanrique/simd-varint/actions
 [license]: https://img.shields.io/github/license/hugmanrique/simd-varint.svg
 [license-url]: LICENSE
