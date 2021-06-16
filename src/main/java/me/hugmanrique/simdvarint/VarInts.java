@@ -57,7 +57,7 @@ public final class VarInts {
     final VectorMask<Byte> contMask = raw.test(VectorOperators.IS_NEGATIVE);
     final int endIndex = contMask.not().firstTrue();
     if (endIndex >= MAX_BYTES) {
-      throw new IllegalArgumentException("Found malformed VarInt");
+      throw new IllegalArgumentException("Found malformed varint");
     }
 
     // Unset the most-significant bit and convert lane values from bytes to ints.
@@ -65,7 +65,7 @@ public final class VarInts {
         .convertShape(VectorOperators.B2I, INT_SPECIES, 0); // contraction
 
     // Shift the value of each lane 7 * N positions to the left, where N is
-    // the lane index. Finally, sum their values, masking the remaining lanes.
+    // the lane index. Finally, sum their values, discarding the remaining lanes.
     final VectorMask<Integer> varintMask = MASKS[endIndex];
     return values
       .lanewise(VectorOperators.LSHL, SHIFT_BY)
