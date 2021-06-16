@@ -49,7 +49,7 @@ assertEquals(255, VarInts.read(buf, 0));
 [artifact-url]: https://search.maven.org/artifact/me.hugmanrique/simd-varint
 [javadoc]: https://javadoc.io/badge2/me.hugmanrique/simd-varint/javadoc.svg
 [javadoc-url]: https://javadoc.io/doc/me.hugmanrique/simd-varint
-[action]: https://github.com/hugmanrique/simd-varint/actions/workflows/build/badge.svg
-[action-url]: https://github.com/hugmanrique/simd-varint/actions
+[action]: https://github.com/hugmanrique/simd-varint/actions/workflows/build.yml/badge.svg
+[action-url]: https://github.com/hugmanrique/simd-varint/actions/workflows/build.yml
 [license]: https://img.shields.io/github/license/hugmanrique/simd-varint.svg
 [license-url]: LICENSE
