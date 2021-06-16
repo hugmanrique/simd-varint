@@ -145,8 +145,8 @@ public final class Varints {
    */
   public static int read(final ByteBuffer buffer) {
     final VectorMask<Byte> mask = sourceMask(buffer.position(), buffer.limit());
-    final ByteVector vector =
-        ByteVector.fromByteBuffer(SPECIES, buffer, buffer.position(), ByteOrder.LITTLE_ENDIAN, mask);
+    final ByteVector vector = ByteVector.fromByteBuffer(SPECIES, buffer,
+        buffer.position(), ByteOrder.LITTLE_ENDIAN, mask);
     final int end = lastIndex(vector);
     buffer.position(buffer.position() + end + 1);
     return read(vector, end);

@@ -117,11 +117,9 @@ class VarintReadTests {
   @Test
   void testThrowsIfTooBig() {
     assertReadThrows(new byte[] {
-        (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, 0x01
-    });
+        (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, 0x01 });
     assertReadThrows(new byte[] {
-        (byte) 0x82, (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0xA0, 0x01
-    });
+        (byte) 0x82, (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0xA0, 0x01 });
   }
 
   @Test
@@ -130,7 +128,6 @@ class VarintReadTests {
     assertRead(new byte[] { (byte) 0xD2, 0x09, (byte) 0xAE, 0x2C }, 1234, 2);
     assertRead(new byte[] {
         (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x08,
-        (byte) 0x8C, (byte) 0xF2, (byte) 0xA1, (byte) 0x8F, 0x07
-    }, Integer.MIN_VALUE, 5);
+        (byte) 0x8C, (byte) 0xF2, (byte) 0xA1, (byte) 0x8F, 0x07 }, Integer.MIN_VALUE, 5);
   }
 }
