@@ -1,43 +1,50 @@
 plugins {
-    id 'java-library'
-    id 'org.cadixdev.licenser' version '0.6.0'
-    id 'checkstyle'
-    id 'net.ltgt.errorprone' version '2.0.1'
+  id 'java-library'
+  id 'org.cadixdev.licenser' version '0.6.0'
+  id 'checkstyle'
+  id 'net.ltgt.errorprone' version '2.0.1' apply false
 }
 
 group 'me.hugmanrique'
 version '1.0-SNAPSHOT'
 
 ext {
-    junitVersion = '5.7.0'
+  junitVersion = '5.7.0'
+  ci = System.getenv("CI")
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(17)
+  }
 }
 
 license {
-    header = project.file('HEADER.txt')
+  header = project.file('HEADER.txt')
+}
+
+if (!ci) {
+  apply plugin: 'net.ltgt.errorprone'
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
+  if (!ci) {
     errorprone 'com.google.errorprone:error_prone_core:2.7.1'
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+  }
+  testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 checkstyle {
-    // Fail build if there's any violations
-    maxErrors = 0
-    maxWarnings = 0
+  // Fail build if there's any violations
+  maxErrors = 0
+  maxWarnings = 0
 }
