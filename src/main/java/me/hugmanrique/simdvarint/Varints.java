@@ -50,7 +50,7 @@ public final class Varints {
 
   private static VectorMask<Byte> sourceMask(final int offset, final int length) {
     // TODO Is there a way to get rid of this precondition? Measure performance impact
-    if (length == 0) {
+    if (length == 0) { // TODO <= 0
       throw new IndexOutOfBoundsException();
     }
     return SPECIES.indexInRange(offset, length);
