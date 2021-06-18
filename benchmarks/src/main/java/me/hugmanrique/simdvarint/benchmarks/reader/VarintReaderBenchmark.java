@@ -14,9 +14,9 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import me.hugmanrique.simdvarint.benchmarks.BenchmarkUtils;
 import me.hugmanrique.simdvarint.benchmarks.reader.cases.ProtobufVarintReader;
+import me.hugmanrique.simdvarint.benchmarks.reader.cases.SimdVarintReader;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
@@ -36,6 +36,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @Measurement(iterations = 5, time = 5) // s
 @Fork(1)
 @State(Scope.Benchmark)
+@SuppressWarnings("DuplicatedCode") // TODO Tidy up
 public class VarintReaderBenchmark {
 
   private static final int BUF_COUNT = 2048;
@@ -64,7 +65,6 @@ public class VarintReaderBenchmark {
   }
 
   @Benchmark
-  @CompilerControl(CompilerControl.Mode.DONT_INLINE)
   public int protobufArrayReader(final ProtobufVarintReader reader) {
     int sum = 0;
     for (int i = 0; i < BUF_COUNT; i++) {
@@ -75,12 +75,33 @@ public class VarintReaderBenchmark {
   }
 
   @Benchmark
-  @CompilerControl(CompilerControl.Mode.DONT_INLINE)
   public int protobufBufferReader(final ProtobufVarintReader reader) {
     int sum = 0;
     for (int i = 0; i < BUF_COUNT; i++) {
       final int value = reader.read(this.buffers[i]);
       sum += value;
+      this.buffers[i].position(this.positions[i]);
+    }
+    return sum;
+  }
+
+  @Benchmark
+  public int simdArrayReader(final SimdVarintReader reader) {
+    int sum = 0;
+    for (int i = 0; i < BUF_COUNT; i++) {
+      final int value = reader.read(this.arrays[i], this.positions[i]);
+      sum += value;
+    }
+    return sum;
+  }
+
+  @Benchmark
+  public int simdBufferReader(final SimdVarintReader reader) {
+    int sum = 0;
+    for (int i = 0; i < BUF_COUNT; i++) {
+      final int value = reader.read(this.buffers[i]);
+      sum += value;
+      this.buffers[i].position(this.positions[i]);
     }
     return sum;
   }
@@ -88,6 +109,7 @@ public class VarintReaderBenchmark {
   public static void main(final String[] args) throws RunnerException {
     final Options opt = new OptionsBuilder()
         .include(VarintReaderBenchmark.class.getSimpleName())
+        .jvmArgsAppend("--add-modules", "jdk.incubator.vector")
         .build();
 
     new Runner(opt).run();

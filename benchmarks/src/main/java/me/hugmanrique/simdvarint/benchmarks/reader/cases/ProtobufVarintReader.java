@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2021 Hugo Manrique.
+ *
+ * This work is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 package me.hugmanrique.simdvarint.benchmarks.reader.cases;
 
 import java.nio.ByteBuffer;
@@ -19,7 +26,9 @@ public class ProtobufVarintReader implements VarintReader {
     int value;
     if ((value = buffer[position++]) >= 0) {
       return value;
-    } else if (buffer.length - position < 9) {
+    // The original implementation is more lenient (4 was 9),
+    // not throwing unless a varlong cannot be read.
+    } else if (buffer.length - position < 4) {
       throw new IllegalArgumentException();
     } else if ((value ^= (buffer[position++] << 7)) < 0) {
       value ^= (~0 << 7);
@@ -54,7 +63,8 @@ public class ProtobufVarintReader implements VarintReader {
     if ((value = buffer.get(tempPos++)) >= 0) {
       buffer.position(tempPos);
       return value;
-    } else if (buffer.limit() - tempPos < 9) {
+    // See comment on the array-reading overload
+    } else if (buffer.limit() - tempPos < 4) {
       throw new IllegalArgumentException();
     } else if ((value ^= (buffer.get(tempPos++) << 7)) < 0) {
       value ^= (~0 << 7);

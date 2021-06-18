@@ -1,13 +1,21 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
 ext {
   jmhVersion = '1.32'
 }
 
+compileJava {
+  options.compilerArgs += ['--add-modules', 'jdk.incubator.vector']
+}
+
+application {
+  mainClass = 'me.hugmanrique.simdvarint.benchmarks.reader.VarintReaderBenchmark'
+}
+
 dependencies {
   implementation project(':simd-varint')
   implementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
-  implementation "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
+  annotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 }
