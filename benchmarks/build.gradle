@@ -2,6 +2,12 @@ plugins {
     id 'java'
 }
 
+ext {
+  jmhVersion = '1.32'
+}
+
 dependencies {
   implementation project(':simd-varint')
+  implementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
+  implementation "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 }
