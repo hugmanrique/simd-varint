@@ -34,12 +34,12 @@ public class VarintReadTests {
   }
 
   @Test
-  void testEmptyByteArray() {
+  void testEmptyByteArrayThrows() {
     assertThrows(IndexOutOfBoundsException.class, () -> Varints.read(new byte[0], 0));
   }
 
   @Test
-  void testEmptyBuffer() {
+  void testEmptyBufferThrows() {
     final var buf = ByteBuffer.allocate(0);
 
     assertThrows(IndexOutOfBoundsException.class, () -> Varints.read(buf));
@@ -129,5 +129,15 @@ public class VarintReadTests {
     assertRead(new byte[] {
         (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x08,
         (byte) 0x8C, (byte) 0xF2, (byte) 0xA1, (byte) 0x8F, 0x07 }, Integer.MIN_VALUE, 5);
+  }
+
+  @Test
+  void testCutoffVarintThrows() {
+    final byte[] src = new byte[] { (byte) 0x80, (byte) 0x80, (byte) 0x80 };
+    final ByteBuffer buf = ByteBuffer.wrap(src);
+
+    assertThrows(IllegalArgumentException.class, () -> Varints.read(src, 0));
+    assertThrows(IllegalArgumentException.class, () -> Varints.read(buf, 0));
+    assertThrows(IllegalArgumentException.class, () -> Varints.read(buf));
   }
 }

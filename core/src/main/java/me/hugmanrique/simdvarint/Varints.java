@@ -111,6 +111,7 @@ public final class Varints {
     final VectorMask<Byte> mask = sourceMask(offset, src.length);
     final ByteVector vector = ByteVector.fromArray(SPECIES, src, offset, mask);
     final int end = lastIndex(vector);
+    if (end >= src.length) throw new IllegalArgumentException("Found malformed varint");
     return read(vector, end);
   }
 
@@ -131,6 +132,7 @@ public final class Varints {
     final ByteVector src =
         ByteVector.fromByteBuffer(SPECIES, buffer, offset, ByteOrder.LITTLE_ENDIAN, mask);
     final int end = lastIndex(src);
+    if (end >= buffer.limit()) throw new IllegalArgumentException("Found malformed varint");
     return read(src, end);
   }
 
@@ -148,6 +150,7 @@ public final class Varints {
     final ByteVector vector = ByteVector.fromByteBuffer(SPECIES, buffer,
         buffer.position(), ByteOrder.LITTLE_ENDIAN, mask);
     final int end = lastIndex(vector);
+    if (end >= buffer.limit()) throw new IllegalArgumentException("Found malformed varint");
     buffer.position(buffer.position() + end + 1);
     return read(vector, end);
   }
