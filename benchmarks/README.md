@@ -10,7 +10,7 @@ To run the benchmarks:
 ```
 
 ## Results
-Last updated on 2021-06-18.
+Ran on an AMD Ryzen 7 3700X @ 3.6 GHz. Last updated on 2021-06-18.
 
 ```
 Benchmark                                    Mode  Cnt       Score      Error  Units
