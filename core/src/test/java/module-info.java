@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-module me.hugmanrique.simdvarint {
-    exports me.hugmanrique.simdvarint;
-    requires jdk.incubator.vector;
+open module me.hugmanrique.simdvarint.tests {
+  requires me.hugmanrique.simdvarint;
+  requires org.junit.jupiter.api;
 }

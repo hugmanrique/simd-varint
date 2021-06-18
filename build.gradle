@@ -1,10 +1,52 @@
 plugins {
+  id 'java'
+  id 'checkstyle'
+  id 'net.ltgt.errorprone' version '2.0.1' apply false
+  id 'org.cadixdev.licenser' version '0.6.0' apply false
+  id 'io.github.gradle-nexus.publish-plugin' version '1.1.0' // must be applied to root project
+}
+
+allprojects {
+  apply plugin: 'org.cadixdev.licenser'
+
+  group 'me.hugmanrique'
+  version = '1.0.1-SNAPSHOT'
+
+  ext {
+    junitVersion = '5.7.0'
+    ci = System.getenv('CI')
+  }
+
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(17)
+    }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  license {
+    header = rootProject.file('HEADER.txt')
+  }
+
+  checkstyle {
+    // Fail build if there's any violations
+    maxErrors = 0
+    maxWarnings = 0
+  }
+}
+
+
+/*plugins {
   id 'java-library'
   id 'org.cadixdev.licenser' version '0.6.0'
   id 'checkstyle'
   id 'net.ltgt.errorprone' version '2.0.1' apply false
   id 'maven-publish'
   id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+  id 'me.champeau.jmh' version '0.6.5'
 }
 
 group 'me.hugmanrique'
@@ -45,11 +87,7 @@ test {
   useJUnitPlatform()
 }
 
-checkstyle {
-  // Fail build if there's any violations
-  maxErrors = 0
-  maxWarnings = 0
-}
+
 
 publishing {
   publications {
@@ -64,3 +102,24 @@ nexusPublishing {
     sonatype()
   }
 }
+
+jmh {
+  jmhVersion = '1.32'
+  jvmArgs = ['-Djmh.separateClasspathJAR=true']
+}
+
+compileJmhJava {
+  //excludes += ['**module-info']
+  options.compilerArgs += ['--add-modules', 'jdk.incubator.vector']
+}
+
+/*jmhJar {
+  processResources.exclude('**\/module-info')
+}*
+
+jmhRunBytecodeGenerator {
+  /*jmhClasspath.minus(files('module-info', 'module-info.java', 'module-info.class'))
+  runtimeClasspath.minus(files('module-info', 'module-info.java', 'module-info.class'))*
+  //generatorType = 'bytecode'
+
+}*/

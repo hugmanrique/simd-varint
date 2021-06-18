@@ -1,2 +1,6 @@
-rootProject.name = 'simd-varint'
+rootProject.name = 'simd-varint-parent'
+
+include 'simd-varint', 'simd-varint-benchmarks'
+project(':simd-varint').projectDir = file('core')
+project(':simd-varint-benchmarks').projectDir = file('benchmarks')
 

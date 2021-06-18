@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
 import me.hugmanrique.simdvarint.Varints;
 import org.junit.jupiter.api.Test;
 
-class VarintReadTests {
+public class VarintReadTests {
 
   static void assertRead(final byte[] src, final int expected, final int expectedLength) {
     final var buf = ByteBuffer.wrap(src);
