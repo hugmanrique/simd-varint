@@ -3,14 +3,10 @@ plugins {
   id 'maven-publish'
 }
 
-if (!ci) {
-  apply plugin: 'net.ltgt.errorprone'
-}
+apply plugin: 'net.ltgt.errorprone'
 
 dependencies {
-  if (!ci) {
-    errorprone 'com.google.errorprone:error_prone_core:2.7.1'
-  }
+  errorprone 'com.google.errorprone:error_prone_core:2.7.1'
   testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }

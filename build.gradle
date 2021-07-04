@@ -14,8 +14,6 @@ allprojects {
 
   ext {
     junitVersion = '5.7.0'
-    //ci = System.getenv('CI')
-    ci = false
   }
 
   java {
@@ -36,10 +34,5 @@ allprojects {
     // Fail build if there's any violations
     maxErrors = 0
     maxWarnings = 0
-  }
-
-  tasks.withType(JavaCompile) {
-    options.fork = true
-    options.forkOptions.jvmArgs << '-Xlog:class+load=info'
   }
 }
