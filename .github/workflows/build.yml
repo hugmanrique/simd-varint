@@ -19,7 +19,7 @@ jobs:
       - name: Set up JDK 17
         uses: AdoptOpenJDK/install-jdk@v1
         with:
-          version: '17'
+          version: '17-ea+28'
           source: 'nightly'
           targets: 'JDK17' # set env variable
       - name: Grant execute permission for gradlew
